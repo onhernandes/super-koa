@@ -1,0 +1,26 @@
+{
+  "plugins": ["header"],
+  "extends": ["problems"],
+  "rules": {
+    "header/header": [
+      2,
+      "line",
+      " Copyright (c) 2023, Matheus Hernandes. All rights reserved.",
+      2
+    ],
+    "semi": ["error", "always"],
+    "require-atomic-updates": "off"
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "process": "readonly"
+  }
+}

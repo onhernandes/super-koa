@@ -1,0 +1,23 @@
+{
+  "ts-node": {
+    "require": ["dotenv/config"]
+  },
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "es2019",
+    "lib": ["dom", "dom.iterable", "es2020"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
+}
