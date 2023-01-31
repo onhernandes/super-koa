@@ -1,6 +1,6 @@
 {
-  "plugins": ["header"],
-  "extends": ["problems"],
+  "plugins": ["header", "@typescript-eslint", "prettier", "node"],
+  "extends": ["problems", "eslint:recommended", "plugin:node/recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "plugin:@typescript-eslint/recommended-requiring-type-checking", "plugin:prettier/recommended"],
   "rules": {
     "header/header": [
       2,
@@ -9,10 +9,25 @@
       2
     ],
     "semi": ["error", "always"],
-    "require-atomic-updates": "off"
+    "require-atomic-updates": "off",
+    "prettier/prettier": "warn",
+    "node/no-missing-import": "off",
+    "node/no-empty-function": "off",
+    "node/no-unsupported-features/es-syntax": "off",
+    "node/no-missing-require": "off",
+    "node/shebang": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "quotes": ["warn", "single", { "avoidEscape": true }],
+    "node/no-unpublished-import": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-explicit-any": "off",
   },
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": ["./tsconfig.json"]
   },
   "env": {
     "node": true,
