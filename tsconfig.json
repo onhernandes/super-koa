@@ -1,7 +1,4 @@
 {
-  "ts-node": {
-    "require": ["dotenv/config"]
-  },
   "compilerOptions": {
     "outDir": "dist",
     "target": "es2019",
@@ -12,6 +9,6 @@
     "esModuleInterop": true,
     "module": "commonjs",
   },
-  "include": ["**/*.ts"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
