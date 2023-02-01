@@ -12,4 +12,4 @@ export type SuperKoaOptions = z.infer<typeof Options>;
 
 export type ObjectType = { [key: string]: any };
 
-export type SuperKoaFn = (app: Koa, options: ObjectType) => unknown;
+export type SuperKoaFn = (app: Koa, options: SuperKoaOptions) => unknown;

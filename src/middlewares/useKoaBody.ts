@@ -1,11 +1,10 @@
 // Copyright (c) 2023, Matheus Hernandes. All rights reserved.
 
 import Koa from "koa";
-import koaBody, { KoaBodyMiddlewareOptions } from "koa-body";
+import koaBody from "koa-body";
+import { SuperKoaOptions } from "../types";
 
-const useKoaBody = (
-  app: Koa,
-  options: Partial<KoaBodyMiddlewareOptions> = {}
-) => app.use(koaBody(options));
+const useKoaBody = (app: Koa, options: SuperKoaOptions = {}) =>
+  app.use(koaBody(options.koaBodyOptions));
 
 export default useKoaBody;
