@@ -2,3 +2,4 @@
 
 export { default as useKoaBody } from "./useKoaBody";
 export { default as useResponseTimeHeader } from "./useResponseTimeHeader";
+export { default as useRequestId } from "./useRequestId";
