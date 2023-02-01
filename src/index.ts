@@ -1,7 +1,7 @@
 // Copyright (c) 2023, Matheus Hernandes. All rights reserved.
 
 import * as Koa from "koa";
-import { useKoaBody } from "./middlewares";
+import { useKoaBody, useResponseTimeHeader } from "./middlewares";
 import { SuperKoaOptions, Options, SuperKoaFn } from "./types";
 
 const optionsEnum = Options.keyof().enum;
@@ -10,10 +10,11 @@ type OptionsMapping = {
 };
 export const optionsMapping: OptionsMapping = {
   [optionsEnum.useKoaBody]: useKoaBody,
+  [optionsEnum.useResponseTimeHeader]: useResponseTimeHeader,
 };
 
-const superKoa = (app: Koa, userOptions: SuperKoaOptions = {}) => {
-  const options = Options.parse(userOptions);
+const superKoa = (app: Koa, userOptions?: SuperKoaOptions) => {
+  const options = Options.parse(userOptions || {});
   const entries = Object.entries(optionsMapping);
 
   for (const [key, fn] of entries) {

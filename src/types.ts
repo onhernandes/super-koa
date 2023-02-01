@@ -3,9 +3,12 @@
 import { z } from "zod";
 import * as Koa from "koa";
 
+const BooleanSchemaDefaultsTrue = z.boolean().default(true);
 export const Options = z.object({
-  useKoaBody: z.boolean().default(true).optional(),
+  useKoaBody: BooleanSchemaDefaultsTrue,
   koaBodyOptions: z.object({}).passthrough().optional(),
+  useResponseTimeHeader: BooleanSchemaDefaultsTrue,
+  responseTimeHeader: z.string().default("X-Response-Time"),
 });
 
 export type SuperKoaOptions = z.infer<typeof Options>;
