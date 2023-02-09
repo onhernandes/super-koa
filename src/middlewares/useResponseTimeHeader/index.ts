@@ -3,7 +3,10 @@
 import * as Koa from "koa";
 import type { SuperKoaFn, SuperKoaOptions } from "../../types";
 
-const useRequestTimeHeader: SuperKoaFn = (app: Koa, options: SuperKoaOptions) =>
+const useResponseTimeHeader: SuperKoaFn = (
+  app: Koa,
+  options: SuperKoaOptions
+) =>
   app.use(async (ctx, next) => {
     const start = Date.now();
     await next();
@@ -11,4 +14,4 @@ const useRequestTimeHeader: SuperKoaFn = (app: Koa, options: SuperKoaOptions) =>
     ctx.set(options.responseTimeHeader, `${ms}ms`);
   });
 
-export default useRequestTimeHeader;
+export default useResponseTimeHeader;

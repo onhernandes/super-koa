@@ -1,7 +1,13 @@
 // Copyright (c) 2023, Matheus Hernandes. All rights reserved.
 
 import * as Koa from "koa";
-import { useKoaBody, useRequestId, useResponseTimeHeader } from "./middlewares";
+import {
+  useAppVersionHeader,
+  useBasicAuth,
+  useKoaBody,
+  useRequestId,
+  useResponseTimeHeader,
+} from "./middlewares";
 import { SuperKoaOptions, Options, SuperKoaFn } from "./types";
 
 const optionsEnum = Options.keyof().enum;
@@ -12,6 +18,8 @@ export const optionsMapping: OptionsMapping = {
   [optionsEnum.useKoaBody]: useKoaBody,
   [optionsEnum.useResponseTimeHeader]: useResponseTimeHeader,
   [optionsEnum.useRequestId]: useRequestId,
+  [optionsEnum.useAppVersionHeader]: useAppVersionHeader,
+  [optionsEnum.useBasicAuth]: useBasicAuth,
 };
 
 const superKoa = (app: Koa, userOptions?: SuperKoaOptions) => {

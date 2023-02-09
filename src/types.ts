@@ -19,6 +19,19 @@ export const Options = z.object({
       z.function().args(z.object({}).passthrough()).returns(z.string()),
     ])
     .default("uuidv4"),
+  useAppVersionHeader: BooleanSchemaDefaultsTrue,
+  appVersionHeader: z.string().optional(),
+  appVersion: z.string().optional(),
+  useBasicAuth: z
+    .discriminatedUnion("enable", [
+      z.object({
+        enable: z.literal(true),
+        username: z.string(),
+        password: z.string(),
+      }),
+      z.object({ enable: z.literal(false) }),
+    ])
+    .default({ enable: false }),
 });
 
 export type SuperKoaOptions = z.infer<typeof Options>;
