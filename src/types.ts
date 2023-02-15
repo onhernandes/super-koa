@@ -5,6 +5,30 @@ import * as Koa from "koa";
 
 export const RequestIdGeneratorEnum = z.enum(["uuid", "uuidv1", "uuidv4"]);
 
+export const RoutesWithoutAuthZod = z.union([
+  z.string(),
+  z.string().array(),
+  z.any(),
+]);
+export type RoutesWithoutAuth = z.infer<typeof RoutesWithoutAuthZod>;
+
+export const JWTAuth = z
+  .discriminatedUnion("enable", [
+    z.object({
+      enable: z.literal(true),
+      routesWithoutAuth: RoutesWithoutAuthZod,
+      tokenIdentifier: z.string(),
+      authRequestHeader: z.string().default("Authorization"),
+      secret: z.string(),
+      refreshTokenEndpoint: z.object({
+        apiPrefix: z.string().default("/api"),
+        endpoint: z.string().default("/refresh-token"),
+      }),
+    }),
+    z.object({ enable: z.literal(false) }),
+  ])
+  .default({ enable: false });
+
 const BooleanSchemaDefaultsTrue = z.boolean().default(true);
 export const Options = z.object({
   useKoaBody: BooleanSchemaDefaultsTrue,
@@ -32,6 +56,7 @@ export const Options = z.object({
       z.object({ enable: z.literal(false) }),
     ])
     .default({ enable: false }),
+  useJWTAuth: JWTAuth,
 });
 
 export type SuperKoaOptions = z.infer<typeof Options>;
