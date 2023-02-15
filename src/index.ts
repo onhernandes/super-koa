@@ -1,6 +1,7 @@
 // Copyright (c) 2023, Matheus Hernandes. All rights reserved.
 
 import * as Koa from "koa";
+import { loadRoutes, loadMiddlewares } from "./helpers";
 import {
   useAppVersionHeader,
   useBasicAuth,
@@ -22,15 +23,17 @@ export const optionsMapping: OptionsMapping = {
   [optionsEnum.useAppVersionHeader]: useAppVersionHeader,
   [optionsEnum.useBasicAuth]: useBasicAuth,
   [optionsEnum.useJWTAuth]: useJWTAuth,
+  [optionsEnum.loadRoutes]: loadRoutes,
+  [optionsEnum.loadMiddlewares]: loadMiddlewares,
 };
 
-const superKoa = (app: Koa, userOptions?: SuperKoaOptions) => {
+const superKoa = async (app: Koa, userOptions?: SuperKoaOptions) => {
   const options = Options.parse(userOptions || {});
   const entries = Object.entries(optionsMapping);
 
   for (const [key, fn] of entries) {
     if (Reflect.get(options, key)) {
-      fn(app, options);
+      await fn(app, options);
     }
   }
 };

@@ -2,12 +2,6 @@
   "plugins": ["header", "@typescript-eslint", "prettier", "node"],
   "extends": ["problems", "eslint:recommended", "plugin:node/recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "plugin:@typescript-eslint/recommended-requiring-type-checking", "plugin:prettier/recommended"],
   "rules": {
-    "header/header": [
-      2,
-      "line",
-      " Copyright (c) 2023, Matheus Hernandes. All rights reserved.",
-      2
-    ],
     "semi": ["error", "always"],
     "require-atomic-updates": "off",
     "prettier/prettier": "warn",

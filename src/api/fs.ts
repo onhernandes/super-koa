@@ -12,7 +12,7 @@ export const listAllFilesFromPath = (
 
   foundFiles.forEach((file: string) => {
     const filePath = `${path}/${file}`;
-    const isDirectory = fs.statSync(filePath);
+    const isDirectory = fs.statSync(filePath).isDirectory();
 
     if (isDirectory) {
       files = listAllFilesFromPath(filePath, acceptableFileExtensions, files);
