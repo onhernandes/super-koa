@@ -4,6 +4,7 @@ import * as Koa from "koa";
 import {
   useAppVersionHeader,
   useBasicAuth,
+  useJWTAuth,
   useKoaBody,
   useRequestId,
   useResponseTimeHeader,
@@ -20,6 +21,7 @@ export const optionsMapping: OptionsMapping = {
   [optionsEnum.useRequestId]: useRequestId,
   [optionsEnum.useAppVersionHeader]: useAppVersionHeader,
   [optionsEnum.useBasicAuth]: useBasicAuth,
+  [optionsEnum.useJWTAuth]: useJWTAuth,
 };
 
 const superKoa = (app: Koa, userOptions?: SuperKoaOptions) => {

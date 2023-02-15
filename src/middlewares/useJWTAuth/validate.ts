@@ -2,6 +2,8 @@
 
 import { RoutesWithoutAuth, SuperKoaOptions } from "../../types";
 import * as Koa from "koa";
+import jsonwebtoken from "jsonwebtoken";
+import { verify } from "../../api/jsonwebtoken";
 
 export const shouldValidateCurrentUrl = (
   routesWithoutAuth: RoutesWithoutAuth,
@@ -11,11 +13,8 @@ export const shouldValidateCurrentUrl = (
     return true;
   }
 
-  routesWithoutAuth = Array.isArray(routesWithoutAuth)
-    ? routesWithoutAuth
-    : [routesWithoutAuth];
   const checks: any[] = routesWithoutAuth.map(
-    (matcher: string | RegExp) => currentUrl.match(matcher)?.length
+    (matcher: string | RegExp) => currentUrl.match(new RegExp(matcher))?.length
   );
 
   return !checks.includes(true);
@@ -23,19 +22,42 @@ export const shouldValidateCurrentUrl = (
 
 const validate =
   (options: SuperKoaOptions) => (ctx: Koa.Context, next: Koa.Next) => {
-    if (!options.useJWTAuth.enable) {
+    const {
+      tokenIdentifier = "Bearer ",
+      routesWithoutAuth = [],
+      contextResultKey = "loggedJWTDecode",
+      authRequestHeader = "Authorization",
+    } = options.useJWTAuth;
+
+    if (!shouldValidateCurrentUrl(routesWithoutAuth as string[], ctx.url)) {
       return next();
     }
 
-    if (
-      options.useJWTAuth.enable &&
-      options.useJWTAuth.routesWithoutAuth &&
-      !shouldValidateCurrentUrl(options.useJWTAuth.routesWithoutAuth, ctx.url)
-    ) {
-      return next();
+    const headerValue =
+      ctx.headers?.[authRequestHeader] ??
+      ctx.headers?.[authRequestHeader.toLowerCase()];
+
+    if (typeof headerValue !== "string") {
+      // @TODO convert into proper customized error
+      throw new Error("Unauthorized");
     }
 
-    const headerValue = 
+    const token = headerValue.replace(tokenIdentifier as string, "");
+
+    try {
+      const result = verify(
+        token,
+        options.useJWTAuth.secret as jsonwebtoken.Secret,
+        options.useJWTAuth.jsonWebTokenOptions as jsonwebtoken.VerifyOptions & {
+          complete: true;
+        }
+      );
+      ctx.state[contextResultKey] = result;
+      return next();
+    } catch (error: any) {
+      // @TODO convert into proper customized error
+      throw new Error("Unauthorized");
+    }
   };
 
 export default validate;
