@@ -11,6 +11,7 @@ import {
   useResponseTimeHeader,
 } from "./middlewares";
 import { SuperKoaOptions, Options, SuperKoaFn } from "./types";
+import * as SuperKoaErrors from "./errors";
 
 const optionsEnum = Options.keyof().enum;
 type OptionsMapping = {
@@ -38,4 +39,5 @@ const superKoa = async (app: Koa, userOptions?: SuperKoaOptions) => {
   }
 };
 
+export { SuperKoaErrors, superKoa };
 export default superKoa;
