@@ -1,6 +1,6 @@
 // Copyright (c) 2023, Matheus Hernandes. All rights reserved.
 
-import { RoutesWithoutAuth, SuperKoaOptions } from "../../types";
+import { RoutesWithoutAuth, useJWTAuth } from "../../types";
 import * as Koa from "koa";
 import jsonwebtoken from "jsonwebtoken";
 import { verify } from "../../api/jsonwebtoken";
@@ -21,15 +21,15 @@ export const shouldValidateCurrentUrl = (
 };
 
 const validate =
-  (options: SuperKoaOptions) => (ctx: Koa.Context, next: Koa.Next) => {
+  (options: useJWTAuth) => (ctx: Koa.Context, next: Koa.Next) => {
     const {
       tokenIdentifier = "Bearer ",
       routesWithoutAuth = [],
       contextResultKey = "loggedJWTDecode",
       authRequestHeader = "Authorization",
-    } = options.useJWTAuth;
+    } = options;
 
-    if (!shouldValidateCurrentUrl(routesWithoutAuth as string[], ctx.url)) {
+    if (!shouldValidateCurrentUrl(routesWithoutAuth, ctx.url)) {
       return next();
     }
 

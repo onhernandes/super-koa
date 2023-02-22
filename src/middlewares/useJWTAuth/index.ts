@@ -1,7 +1,7 @@
 // Copyright (c) 2023, Matheus Hernandes. All rights reserved.
 
 import * as Koa from "koa";
-import { SuperKoaOptions } from "../../types";
+import { SuperKoaOptions, useJWTAuth } from "../../types";
 import validate from "./validate";
 
 const useJWTAuth = (app: Koa, options: SuperKoaOptions): void => {
@@ -9,7 +9,7 @@ const useJWTAuth = (app: Koa, options: SuperKoaOptions): void => {
     return;
   }
 
-  app.use(validate(options));
+  app.use(validate(options.useJWTAuth));
 };
 
 export default useJWTAuth;
