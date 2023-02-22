@@ -1,5 +1,3 @@
-// Copyright (c) 2023, Matheus Hernandes. All rights reserved.
-
 import * as Koa from "koa";
 import { loadRoutes, loadMiddlewares } from "./helpers";
 import {
@@ -14,10 +12,7 @@ import { SuperKoaOptions, Options, SuperKoaFn } from "./types";
 import * as SuperKoaErrors from "./errors";
 
 const optionsEnum = Options.keyof().enum;
-type OptionsMapping = {
-  [key: string]: SuperKoaFn;
-};
-export const optionsMapping: OptionsMapping = {
+export const optionsMapping: Record<string, SuperKoaFn> = {
   [optionsEnum.useKoaBody]: useKoaBody,
   [optionsEnum.useResponseTimeHeader]: useResponseTimeHeader,
   [optionsEnum.useRequestId]: useRequestId,

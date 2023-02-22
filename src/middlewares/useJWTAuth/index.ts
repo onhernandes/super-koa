@@ -1,7 +1,6 @@
-// Copyright (c) 2023, Matheus Hernandes. All rights reserved.
-
 import * as Koa from "koa";
-import { SuperKoaOptions, useJWTAuth } from "../../types";
+import { SuperKoaOptions } from "../../types";
+import generateRefreshTokenRouter from "./generateRefreshTokenRouter";
 import validate from "./validate";
 
 const useJWTAuth = (app: Koa, options: SuperKoaOptions): void => {
@@ -10,6 +9,10 @@ const useJWTAuth = (app: Koa, options: SuperKoaOptions): void => {
   }
 
   app.use(validate(options.useJWTAuth));
+
+  const router = generateRefreshTokenRouter(options.useJWTAuth);
+  app.use(router.routes());
+  app.use(router.allowedMethods());
 };
 
 export default useJWTAuth;

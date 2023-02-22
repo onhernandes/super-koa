@@ -1,5 +1,3 @@
-// Copyright (c) 2023, Matheus Hernandes. All rights reserved.
-
 import useRequestId from "./index";
 import Koa from "koa";
 import request, { Response } from "supertest";

@@ -1,5 +1,5 @@
 {
-  "plugins": ["header", "@typescript-eslint", "prettier", "node"],
+  "plugins": ["@typescript-eslint", "prettier", "node"],
   "extends": ["problems", "eslint:recommended", "plugin:node/recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "plugin:@typescript-eslint/recommended-requiring-type-checking", "plugin:prettier/recommended"],
   "rules": {
     "semi": ["error", "always"],

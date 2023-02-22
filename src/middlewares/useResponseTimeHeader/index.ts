@@ -1,5 +1,3 @@
-// Copyright (c) 2023, Matheus Hernandes. All rights reserved.
-
 import * as Koa from "koa";
 import type { SuperKoaFn, SuperKoaOptions } from "../../types";
 

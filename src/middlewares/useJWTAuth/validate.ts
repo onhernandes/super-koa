@@ -1,6 +1,4 @@
-// Copyright (c) 2023, Matheus Hernandes. All rights reserved.
-
-import { RoutesWithoutAuth, useJWTAuth } from "../../types";
+import { RoutesWithoutAuth, useJWTAuth } from "../../types/useJWTAuth";
 import * as Koa from "koa";
 import jsonwebtoken from "jsonwebtoken";
 import { verify } from "../../api/jsonwebtoken";
@@ -23,10 +21,12 @@ export const shouldValidateCurrentUrl = (
 const validate =
   (options: useJWTAuth) => (ctx: Koa.Context, next: Koa.Next) => {
     const {
-      tokenIdentifier = "Bearer ",
-      routesWithoutAuth = [],
-      contextResultKey = "loggedJWTDecode",
-      authRequestHeader = "Authorization",
+      tokenIdentifier,
+      routesWithoutAuth,
+      contextResultKey,
+      authRequestHeader,
+      secret,
+      jsonWebTokenOptions,
     } = options;
 
     if (!shouldValidateCurrentUrl(routesWithoutAuth, ctx.url)) {
@@ -42,13 +42,13 @@ const validate =
       throw new Error("Unauthorized");
     }
 
-    const token = headerValue.replace(tokenIdentifier as string, "");
+    const token = headerValue.replace(tokenIdentifier, "");
 
     try {
       const result = verify(
         token,
-        options.useJWTAuth.secret as jsonwebtoken.Secret,
-        options.useJWTAuth.jsonWebTokenOptions as jsonwebtoken.VerifyOptions & {
+        secret as jsonwebtoken.Secret,
+        jsonWebTokenOptions as jsonwebtoken.VerifyOptions & {
           complete: true;
         }
       );

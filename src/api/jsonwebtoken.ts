@@ -1,5 +1,3 @@
-// Copyright (c) 2023, Matheus Hernandes. All rights reserved.
-
 import jsonwebtoken from "jsonwebtoken";
 
 export const verify = (

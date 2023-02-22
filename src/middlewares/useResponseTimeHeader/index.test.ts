@@ -1,5 +1,3 @@
-// Copyright (c) 2023, Matheus Hernandes. All rights reserved.
-
 import useResponseTimeHeader from "./index";
 import Koa from "koa";
 import request from "supertest";
