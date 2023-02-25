@@ -4,11 +4,11 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
-const appTitle = 'SuperKoa';
+const appTitle = 'Super Koa'
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: appTitle,
-  tagline: 'Making Koa apps stronger than Hulk',
+  tagline: 'Making Koa apps stronger than Hulk!',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -59,7 +59,7 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: appTitle,
+        title: 'My Site',
         logo: {
           alt: 'My Site Logo',
           src: 'img/logo.svg',
@@ -72,7 +72,7 @@ const config = {
             label: 'Tutorial',
           },
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/onhernandes/super-koa',
             label: 'GitHub',
             position: 'right',
           },
@@ -91,23 +91,6 @@ const config = {
             ],
           },
           {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
-            ],
-          },
-          {
             title: 'More',
             items: [
               {
@@ -117,7 +100,7 @@ const config = {
             ],
           },
         ],
-        copyright: `MIT Licensed. Built with ❤️ and Docusaurus.`,
+        copyright: `MIT Licensed. Built with ❤️ and Docusaurus`,
       },
       prism: {
         theme: lightCodeTheme,

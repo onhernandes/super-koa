@@ -2,40 +2,52 @@ import React from 'react';
 import clsx from 'clsx';
 import styles from './styles.module.css';
 
-const FeatureList = [
+type FeatureItem = {
+  title: string;
+  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
+  description: JSX.Element;
+};
+
+const FeatureList: FeatureItem[] = [
   {
     title: 'Easy to Use',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        SuperKoa was designed to improve your Koa apps giving full ground-up APIs features, from basic to complex ones.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'All batteries included',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        SuperKoa manages basic features from body parsing to auto-loading routes, middlewares and more! This lets you focus on what matters without worrying about little details.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'No need to redesign your application',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        You don't need to refactor your app to any fancy framework just to be able to use nice features. Just plugs your Koa app and it's good to go!
+      </>
+    ),
+  },
+  {
+    title: 'Error handling made easy',
+    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    description: (
+      <>
+        Built-in customized errors & error handling!
       </>
     ),
   },
 ];
 
-function Feature({Svg, title, description}) {
+function Feature({title, Svg, description}: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
       <div className="text--center">
@@ -49,7 +61,7 @@ function Feature({Svg, title, description}) {
   );
 }
 
-export default function HomepageFeatures() {
+export default function HomepageFeatures(): JSX.Element {
   return (
     <section className={styles.features}>
       <div className="container">
