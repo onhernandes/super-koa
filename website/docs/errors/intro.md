@@ -2,9 +2,9 @@
 sidebar_position: 1
 ---
 
-# Manage Docs Versions
+# Customized Errors
 
-Docusaurus can manage multiple versions of your docs.
+SuperKoa gives you full customized errors, made simple for developers. A `NotFound` error means the same thing for whoever is handling it, it means HTTP 404 for HTTP APIs but also 
 
 ## Create a docs version
 
