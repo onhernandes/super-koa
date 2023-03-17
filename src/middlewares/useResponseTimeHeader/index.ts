@@ -13,9 +13,13 @@ export const getMiddleware =
 const useResponseTimeHeader: SuperKoaFn = (_, options) => {
   if (options.useResponseTimeHeader) {
     return {
-      middlewares: [
-        getMiddleware(options.useResponseTimeHeader.responseHeaderName),
-      ],
+      middlewares: {
+        globals: {
+          responseTimeHeader: getMiddleware(
+            options.useResponseTimeHeader.responseHeaderName
+          ),
+        },
+      },
     };
   }
 

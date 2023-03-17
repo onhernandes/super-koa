@@ -1,5 +1,5 @@
 import * as Koa from "koa";
-import { SuperKoaFn, SuperKoaOptions } from "../../types";
+import { SuperKoaFn } from "../../types";
 import uuid from "uuid";
 import { RequestIdGeneratorEnum } from "../../types/options";
 
@@ -27,19 +27,21 @@ export const getMiddleware =
     return next();
   };
 
-const useRequestIdHeader: SuperKoaFn = (app: Koa, options: SuperKoaOptions) => {
-  if (options.useRequestId) {
-    return {
-      middlewares: [
-        getMiddleware(
+const useRequestIdHeader: SuperKoaFn = (_, options) => {
+  if (options.useRequestId === false) {
+    return {};
+  }
+
+  return {
+    middlewares: {
+      globals: {
+        requestIdHeader: getMiddleware(
           options.useRequestId.requestIdGenerator,
           options.useRequestId.headerName
         ),
-      ],
-    };
-  }
-
-  return {};
+      },
+    },
+  };
 };
 
 export default useRequestIdHeader;

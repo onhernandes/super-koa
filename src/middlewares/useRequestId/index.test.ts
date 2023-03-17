@@ -3,6 +3,7 @@ import Koa from "koa";
 import request, { Response } from "supertest";
 import http from "http";
 import { Options } from "../../types";
+import * as R from "ramda";
 
 jest.mock("uuid", () => ({
   v1: () => "v1",
@@ -13,7 +14,18 @@ describe("useRequestId", () => {
   it("Set X-Request-ID header", async () => {
     const app = new Koa();
 
-    useRequestId(app, Options.parse({}));
+    const superKoaCtx = useRequestId(app, Options.parse({ useRequestId: {} }));
+    const middleware: Koa.Middleware | undefined = R.path(
+      ["middlewares", "globals", "requestIdHeader"],
+      superKoaCtx
+    );
+    expect(middleware).toBeTruthy();
+
+    if (!middleware) {
+      return;
+    }
+
+    app.use(middleware);
 
     app.use((ctx: Koa.Context) => {
       ctx.body = ctx.request.body;
@@ -29,7 +41,21 @@ describe("useRequestId", () => {
   it("Set X-Request-ID header using uuidv1", async () => {
     const app = new Koa();
 
-    useRequestId(app, Options.parse({ requestIdGenerator: "uuidv1" }));
+    const superKoaCtx = useRequestId(
+      app,
+      Options.parse({ useRequestId: { requestIdGenerator: "uuidv1" } })
+    );
+    const middleware: Koa.Middleware | undefined = R.path(
+      ["middlewares", "globals", "requestIdHeader"],
+      superKoaCtx
+    );
+    expect(middleware).toBeTruthy();
+
+    if (!middleware) {
+      return;
+    }
+
+    app.use(middleware);
 
     app.use((ctx: Koa.Context) => {
       ctx.body = ctx.request.body;
@@ -45,7 +71,21 @@ describe("useRequestId", () => {
   it("Custom Request ID header", async () => {
     const app = new Koa();
 
-    useRequestId(app, Options.parse({ requestIdHeader: "ReqID" }));
+    const superKoaCtx = useRequestId(
+      app,
+      Options.parse({ useRequestId: { headerName: "reqid" } })
+    );
+    const middleware: Koa.Middleware | undefined = R.path(
+      ["middlewares", "globals", "requestIdHeader"],
+      superKoaCtx
+    );
+    expect(middleware).toBeTruthy();
+
+    if (!middleware) {
+      return;
+    }
+
+    app.use(middleware);
 
     app.use((ctx: Koa.Context) => {
       ctx.body = ctx.request.body;
@@ -62,7 +102,21 @@ describe("useRequestId", () => {
     const app = new Koa();
 
     const requestIdGenerator = () => "reqid";
-    useRequestId(app, Options.parse({ requestIdGenerator }));
+    const superKoaCtx = useRequestId(
+      app,
+      Options.parse({ useRequestId: { requestIdGenerator } })
+    );
+    const middleware: Koa.Middleware | undefined = R.path(
+      ["middlewares", "globals", "requestIdHeader"],
+      superKoaCtx
+    );
+    expect(middleware).toBeTruthy();
+
+    if (!middleware) {
+      return;
+    }
+
+    app.use(middleware);
 
     app.use((ctx: Koa.Context) => {
       ctx.body = ctx.request.body;

@@ -15,7 +15,7 @@ const useJWTAuth: SuperKoaFn = (_, options) => {
   return {
     middlewares: {
       auth: {
-        parse: getMiddleware(options.useJWTAuth),
+        jwtParse: getMiddleware(options.useJWTAuth),
       },
     },
     helpers: { auth: { jwt } },

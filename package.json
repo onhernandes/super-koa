@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc",
-    "lint": "./node_modules/.bin/eslint --max-warnings 0",
-    "lint:fix": "./node_modules/.bin/eslint --max-warnings 0 --fix",
+    "lint": "./node_modules/.bin/eslint --max-warnings 0 ./src",
+    "lint:fix": "./node_modules/.bin/eslint --max-warnings 0 --fix ./src",
     "prettier": "./node_modules/.bin/prettier --write \"./src/**/*.{ts,json,md}\"",
     "test": "jest"
   },

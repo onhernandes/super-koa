@@ -1,16 +1,32 @@
 import * as Koa from "koa";
-import type { SuperKoaFn, SuperKoaOptions } from "../../types";
+import type { SuperKoaFn } from "../../types";
+import { AppVersionHeaderConfig } from "../../types/options";
 
 export const appVersionHeader =
-  (options: SuperKoaOptions) => (ctx: Koa.Context, next: Koa.Next) => {
-    if (options.appVersion && options.appVersionHeader && options.appVersion) {
-      ctx.set(options.appVersionHeader, options.appVersion);
-    }
+  (options: AppVersionHeaderConfig) => (ctx: Koa.Context, next: Koa.Next) => {
+    ctx.set(options.headerName, options.appVersion);
 
     return next();
   };
 
-const useAppVersionHeader: SuperKoaFn = (app: Koa, options: SuperKoaOptions) =>
-  app.use(appVersionHeader(options));
+/**
+ * Returns a middleware that defines the current API version
+ * in the response' headers
+ **/
+const useAppVersionHeader: SuperKoaFn = (_, options) => {
+  if (options.useAppVersionHeader === false) {
+    return {};
+  }
+
+  const middleware = appVersionHeader(options.useAppVersionHeader);
+
+  return {
+    middlewares: {
+      globals: {
+        appVersionHeader: middleware,
+      },
+    },
+  };
+};
 
 export default useAppVersionHeader;

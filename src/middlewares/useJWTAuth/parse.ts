@@ -1,7 +1,5 @@
 import { RoutesWithoutAuth, useJWTAuth } from "../../types/useJWTAuth";
 import * as Koa from "koa";
-import jsonwebtoken from "jsonwebtoken";
-import { verify } from "../../api/jsonwebtoken";
 import { Unauthorized } from "../../errors";
 import { parse as jwtParse } from "./jwt";
 

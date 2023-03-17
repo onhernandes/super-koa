@@ -7,13 +7,8 @@ export interface SuperKoaHelper<T> {
 
 export type HelpersErrorsContext = Record<string, unknown>;
 
-export type SuperKoaMiddlewareCategories = "auth";
-
 interface SuperKoaContext {
-  middlewares: Record<
-    SuperKoaMiddlewareCategories,
-    Record<string, Koa.Middleware>
-  >;
+  middlewares: Record<string, Record<string, Koa.Middleware>>;
   helpers: Record<string, HelpersErrorsContext>;
   errors: Record<string, AppError>;
 }

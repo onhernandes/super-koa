@@ -3,12 +3,27 @@ import Koa from "koa";
 import request from "supertest";
 import http from "http";
 import { Options } from "../../types";
+import * as R from "ramda";
 
 describe("useResponseTimeHeader", () => {
   it("Set X-Response-Time header", async () => {
     const app = new Koa();
 
-    useResponseTimeHeader(app, Options.parse({}));
+    const superKoaCtx = useResponseTimeHeader(
+      app,
+      Options.parse({ useResponseTimeHeader: {} })
+    );
+    const middleware: Koa.Middleware | undefined = R.path(
+      ["middlewares", "globals", "responseTimeHeader"],
+      superKoaCtx
+    );
+    expect(middleware).toBeTruthy();
+
+    if (!middleware) {
+      return;
+    }
+
+    app.use(middleware);
 
     app.use((ctx: Koa.Context) => {
       ctx.body = ctx.request.body;
@@ -18,16 +33,29 @@ describe("useResponseTimeHeader", () => {
       .get("/")
       .set("Accept", "application/json");
 
-    expect(response.headers).toHaveProperty("x-response-time");
+    expect(response.headers).toHaveProperty("x-app-version");
   });
 
   it("Custom X-Response-Time header", async () => {
     const app = new Koa();
 
-    useResponseTimeHeader(
+    const superKoaCtx = useResponseTimeHeader(
       app,
-      Options.parse({ responseTimeHeader: "X-Response-Total-Time" })
+      Options.parse({
+        useResponseTimeHeader: { responseHeaderName: "X-Response-Total-Time" },
+      })
     );
+    const middleware: Koa.Middleware | undefined = R.path(
+      ["middlewares", "globals", "responseTimeHeader"],
+      superKoaCtx
+    );
+    expect(middleware).toBeTruthy();
+
+    if (!middleware) {
+      return;
+    }
+
+    app.use(middleware);
 
     app.use((ctx: Koa.Context) => {
       ctx.body = ctx.request.body;

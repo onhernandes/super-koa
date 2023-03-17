@@ -20,3 +20,5 @@ export const AppVersionHeader = z.object({
   headerName: z.string().default("X-App-Version"),
   appVersion: z.string(),
 });
+
+export type AppVersionHeaderConfig = z.infer<typeof AppVersionHeader>;

@@ -1,4 +1,3 @@
-import * as Koa from "koa";
 import {
   useAppVersionHeader,
   useBasicAuth,
@@ -7,9 +6,9 @@ import {
   useRequestId,
   useResponseTimeHeader,
 } from "./middlewares";
-import { SuperKoaOptions, Options, SuperKoaFn } from "./types";
+import { Options, SuperKoaFn } from "./types";
 import * as SuperKoaErrors from "./errors";
-import { PartialSuperKoaContext, } from "./types/SuperKoaContext";
+import { PartialSuperKoaContext } from "./types/SuperKoaContext";
 import { mergeSuperKoaContexts } from "./helpers";
 
 const optionsEnum = Options.keyof().enum;
@@ -22,7 +21,7 @@ export const optionsMapping: Record<string, SuperKoaFn> = {
   [optionsEnum.useJWTAuth]: useJWTAuth,
 };
 
-const superKoa = (app: Koa, inputOptions?: SuperKoaOptions) => {
+const superKoa: SuperKoaFn = (app, inputOptions) => {
   const userOptions = Options.parse(inputOptions || {});
   const entries = Object.entries(optionsMapping);
   let superKoaCtx: PartialSuperKoaContext = {};
