@@ -26,8 +26,8 @@ export const Options = z.object({
     .default(false),
   useJWTAuth: z.union([JWTAuth, z.literal(false)]).default(false),
   useErrorManager: z.boolean().default(true),
-  loadRoutes: z.array(z.string()),
-  loadMiddlewares: z.array(z.string()),
+  loadRoutes: z.string().array().default([]),
+  loadMiddlewares: z.string().array().default([]),
 });
 
 export type SuperKoaOptions = z.infer<typeof Options>;

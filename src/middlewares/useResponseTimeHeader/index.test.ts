@@ -33,7 +33,7 @@ describe("useResponseTimeHeader", () => {
       .get("/")
       .set("Accept", "application/json");
 
-    expect(response.headers).toHaveProperty("x-app-version");
+    expect(response.headers).toHaveProperty("x-response-time");
   });
 
   it("Custom X-Response-Time header", async () => {
