@@ -1,38 +1,29 @@
 import { z } from "zod";
+import { PartialSuperKoaContext } from "./SuperKoaContext";
 import * as Koa from "koa";
 import { JWTAuth } from "./useJWTAuth";
+import { AppVersionHeader, RequestId, ResponseTimeHeader } from "./options";
 
-export const RequestIdGeneratorEnum = z.enum(["uuid", "uuidv1", "uuidv4"]);
+export const ZodAnyObject = z.record(z.any());
 
-export type ObjectType = { [key: string]: any };
-
-const BooleanSchemaDefaultsTrue = z.boolean().default(true);
 export const Options = z.object({
-  useKoaBody: BooleanSchemaDefaultsTrue,
-  koaBodyOptions: z.object({}).passthrough().optional(),
-  useResponseTimeHeader: BooleanSchemaDefaultsTrue,
-  responseTimeHeader: z.string().default("X-Response-Time"),
-  useRequestId: BooleanSchemaDefaultsTrue,
-  requestIdHeader: z.string().default("X-Request-ID"),
-  requestIdGenerator: z
-    .union([
-      RequestIdGeneratorEnum,
-      z.function().args(z.object({}).passthrough()).returns(z.string()),
-    ])
-    .default("uuidv4"),
-  useAppVersionHeader: BooleanSchemaDefaultsTrue,
-  appVersionHeader: z.string().optional(),
-  appVersion: z.string().optional(),
+  useKoaBody: z.union([ZodAnyObject, z.literal(false)]).default({}),
+  useResponseTimeHeader: z
+    .union([ResponseTimeHeader, z.literal(false)])
+    .default(false),
+  useRequestId: z.union([RequestId, z.literal(false)]).default(false),
+  useAppVersionHeader: z
+    .union([AppVersionHeader, z.literal(false)])
+    .default(false),
   useBasicAuth: z
-    .discriminatedUnion("enable", [
+    .union([
       z.object({
-        enable: z.literal(true),
         username: z.string(),
         password: z.string(),
       }),
-      z.object({ enable: z.literal(false) }),
+      z.literal(false),
     ])
-    .default({ enable: false }),
+    .default(false),
   useJWTAuth: z.union([JWTAuth, z.literal(false)]).default(false),
   loadRoutes: z.union([z.array(z.string()), z.literal(false)]),
   loadMiddlewares: z.union([z.array(z.string()), z.literal(false)]),
@@ -40,4 +31,11 @@ export const Options = z.object({
 
 export type SuperKoaOptions = z.infer<typeof Options>;
 
-export type SuperKoaFn = (app: Koa, options: SuperKoaOptions) => unknown;
+const deepPartialOptions = Options.deepPartial();
+export type PartialSuperKoaOptions = z.infer<typeof deepPartialOptions>;
+
+export type ObjectType = { [key: string]: any };
+
+export interface SuperKoaFn {
+  (app: Koa, options: SuperKoaOptions): PartialSuperKoaContext;
+}

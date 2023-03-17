@@ -1,18 +1,25 @@
-import * as Koa from "koa";
-import { SuperKoaOptions } from "../../types";
-import generateRefreshTokenRouter from "./generateRefreshTokenRouter";
-import validate from "./validate";
+import { SuperKoaFn } from "../../types";
+import { parse, sign } from "./jwt";
+import getMiddleware from "./parse";
 
-const useJWTAuth = (app: Koa, options: SuperKoaOptions): void => {
+const useJWTAuth: SuperKoaFn = (_, options) => {
   if (!options.useJWTAuth) {
-    return;
+    return {};
   }
 
-  app.use(validate(options.useJWTAuth));
+  const jwt = {
+    sign: sign(options.useJWTAuth),
+    parse: parse(options.useJWTAuth),
+  };
 
-  const router = generateRefreshTokenRouter(options.useJWTAuth);
-  app.use(router.routes());
-  app.use(router.allowedMethods());
+  return {
+    middlewares: {
+      auth: {
+        parse: getMiddleware(options.useJWTAuth),
+      },
+    },
+    helpers: { auth: { jwt } },
+  };
 };
 
 export default useJWTAuth;

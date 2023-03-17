@@ -2,6 +2,8 @@ import { RoutesWithoutAuth, useJWTAuth } from "../../types/useJWTAuth";
 import * as Koa from "koa";
 import jsonwebtoken from "jsonwebtoken";
 import { verify } from "../../api/jsonwebtoken";
+import { Unauthorized } from "../../errors";
+import { parse as jwtParse } from "./jwt";
 
 export const shouldValidateCurrentUrl = (
   routesWithoutAuth: RoutesWithoutAuth,
@@ -18,15 +20,14 @@ export const shouldValidateCurrentUrl = (
   return !checks.includes(true);
 };
 
-const validate =
-  (options: useJWTAuth) => (ctx: Koa.Context, next: Koa.Next) => {
+const parse =
+  (options: useJWTAuth): Koa.Middleware =>
+  (ctx, next) => {
     const {
       tokenIdentifier,
       routesWithoutAuth,
       contextResultKey,
       authRequestHeader,
-      secret,
-      jsonWebTokenOptions,
     } = options;
 
     if (!shouldValidateCurrentUrl(routesWithoutAuth, ctx.url)) {
@@ -38,26 +39,18 @@ const validate =
       ctx.headers?.[authRequestHeader.toLowerCase()];
 
     if (typeof headerValue !== "string") {
-      // @TODO convert into proper customized error
-      throw new Error("Unauthorized");
+      throw new Unauthorized();
     }
 
     const token = headerValue.replace(tokenIdentifier, "");
 
     try {
-      const result = verify(
-        token,
-        secret as jsonwebtoken.Secret,
-        jsonWebTokenOptions as jsonwebtoken.VerifyOptions & {
-          complete: true;
-        }
-      );
+      const result = jwtParse(options)(token);
       ctx.state[contextResultKey] = result;
       return next();
     } catch (error: any) {
-      // @TODO convert into proper customized error
-      throw new Error("Unauthorized");
+      throw new Unauthorized();
     }
   };
 
-export default validate;
+export default parse;

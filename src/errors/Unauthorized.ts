@@ -4,7 +4,7 @@ import { PartialAppErrorOptionsSchema, AppErrorOptionsSchema } from "./types";
 
 class Unauthorized extends AppError {
   constructor(options?: z.infer<typeof PartialAppErrorOptionsSchema>) {
-    const message = "Access Denied";
+    const message = "Unauthorized";
     options = {
       code: 401,
       httpStatusCode: 401,

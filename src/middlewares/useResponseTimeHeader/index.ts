@@ -1,15 +1,25 @@
 import * as Koa from "koa";
-import type { SuperKoaFn, SuperKoaOptions } from "../../types";
+import type { SuperKoaFn } from "../../types";
 
-const useResponseTimeHeader: SuperKoaFn = (
-  app: Koa,
-  options: SuperKoaOptions
-) =>
-  app.use(async (ctx, next) => {
+export const getMiddleware =
+  (headerName: string): Koa.Middleware =>
+  async (ctx, next) => {
     const start = Date.now();
     await next();
     const ms = Date.now() - start;
-    ctx.set(options.responseTimeHeader, `${ms}ms`);
-  });
+    ctx.set(headerName, `${ms}ms`);
+  };
+
+const useResponseTimeHeader: SuperKoaFn = (_, options) => {
+  if (options.useResponseTimeHeader) {
+    return {
+      middlewares: [
+        getMiddleware(options.useResponseTimeHeader.responseHeaderName),
+      ],
+    };
+  }
+
+  return {};
+};
 
 export default useResponseTimeHeader;

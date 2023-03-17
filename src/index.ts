@@ -1,5 +1,4 @@
 import * as Koa from "koa";
-import { loadRoutes, loadMiddlewares } from "./helpers";
 import {
   useAppVersionHeader,
   useBasicAuth,
@@ -10,6 +9,8 @@ import {
 } from "./middlewares";
 import { SuperKoaOptions, Options, SuperKoaFn } from "./types";
 import * as SuperKoaErrors from "./errors";
+import { PartialSuperKoaContext, } from "./types/SuperKoaContext";
+import { mergeSuperKoaContexts } from "./helpers";
 
 const optionsEnum = Options.keyof().enum;
 export const optionsMapping: Record<string, SuperKoaFn> = {
@@ -19,19 +20,21 @@ export const optionsMapping: Record<string, SuperKoaFn> = {
   [optionsEnum.useAppVersionHeader]: useAppVersionHeader,
   [optionsEnum.useBasicAuth]: useBasicAuth,
   [optionsEnum.useJWTAuth]: useJWTAuth,
-  [optionsEnum.loadRoutes]: loadRoutes,
-  [optionsEnum.loadMiddlewares]: loadMiddlewares,
 };
 
-const superKoa = async (app: Koa, userOptions?: SuperKoaOptions) => {
-  const options = Options.parse(userOptions || {});
+const superKoa = (app: Koa, inputOptions?: SuperKoaOptions) => {
+  const userOptions = Options.parse(inputOptions || {});
   const entries = Object.entries(optionsMapping);
+  let superKoaCtx: PartialSuperKoaContext = {};
 
   for (const [key, fn] of entries) {
-    if (Reflect.get(options, key)) {
-      await fn(app, options);
+    if (Reflect.get(userOptions, key)) {
+      const partialContext = fn(app, userOptions);
+      superKoaCtx = mergeSuperKoaContexts(superKoaCtx, partialContext);
     }
   }
+
+  return superKoaCtx;
 };
 
 export { SuperKoaErrors, superKoa };
