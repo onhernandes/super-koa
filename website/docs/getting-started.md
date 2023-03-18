@@ -2,46 +2,33 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Getting Started
 
-Let's discover **Docusaurus in less than 5 minutes**.
+SuperKoa tries to work as an extension of Koa with a lot of features included. It's default function will just return a SuperKoaContext object containing everything we have to offer.
 
-## Getting Started
+If you want to, Superkoa will assimilate it's customized context with the Koa's Context definition, so you'll have everything close as possible - it's disabled by default, you can change this by passing `{ assimilateContext: true }` to `SuperKoa` function.
 
-Get started by **creating a new site**.
+> SuperKoa **does not** instantiates `Koa.Application`, rather it receives the application instance as first parameter.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+### Installation
 
-### What you'll need
+You may install SuperKoa directly from NPM, you really only need to install koa itself.
 
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
+```shell
+npm i super-koa
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+## Let's initialize our application
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+```typescript
+import * as Koa from "koa";
+import SuperKoa, { SuperKoaOptions } from "super-koa";
 
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
+const app = new Koa();
+const options: SuperKoaOptions = {};
+SuperKoa(app, options);
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+And that's it! This is enough to get things going. Now you Koa application is powered by SuperKoa and you have plenty of features to keep exploring!
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+See more interesting features:

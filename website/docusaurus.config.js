@@ -77,9 +77,9 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "intro",
+            docId: "getting-started",
             position: "left",
-            label: "Tutorial",
+            label: "Getting Started",
           },
           {
             href: "https://github.com/onhernandes/super-koa",
