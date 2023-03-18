@@ -1,0 +1,85 @@
+---
+sidebar_label: "Configuration (SuperKoaOptions)"
+sidebar_position: 2
+---
+
+# Configuration with SuperKoaOptions
+
+```mdx-code-block
+import TOCInline from '@theme/TOCInline';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+```
+
+SuperKoa has a broad amount of options which you may use to configure your application properly. Most of these options works as TS unions being `false | { ... }`.
+
+See below for the most useful ones:
+
+<TOCInline toc={toc} />
+
+### Opinionated {#opinionated}
+
+By default, SuperKoa produces an opinionated context, with some useful helpers, middlewares and more - like body-parsing and error parsing middlewares
+The `opinionated` allows you to disable this by setting as `false`
+
+```js
+const superKoaContext = SuperKoa(app, { opinionated: false });
+```
+
+# Group of helpers & middlewares
+
+Our helpers and middlewares are grouped by categories, which follows:
+
+<TOCInline
+  toc={toc.filter((node) => node.id.match(/globals/g)?.length)}
+  minHeadingLevel={2}
+  maxHeadingLevel={3}
+/>
+
+---
+
+## Globals {#globals}
+
+### JSON body parsing {#globals--use-koa-body}
+
+By default, Koa does not supports JSON body parsing, so we need to implement something like [koa-body](https://github.com/koajs/koa-body) ourselves. This is done via `SuperKoaOptions.useKoaBody` property.
+
+Either pass `false` for disabling or pass an object which is forwarded to `koa-body` itself. For available options see [package docs](https://github.com/koajs/koa-body#options)
+
+### Calculate response time and set the response header {#globals--use-response-time-header}
+
+By default SuperKoa enables a customized response header which calculates the total response time, which can be configured via `SuperKoaOptions.useResponseTimeHeader` property. To disable it, just set as `false`
+
+The response header will be `X-Request-ID`, but you change it using `SuperKoaOptions.useResponseTimeHeader.headerName`
+
+```typescript
+const options: SuperKoaOptions = {
+  useResponseTimeHeader: {
+    headerName: "Response-Time"
+  }
+};
+
+SuperKoa(app, options);
+```
+
+### Generate a request ID for each request call {#globals--use-request-id}
+
+SuperKoa generates a unique ID for this specific request, by default it uses [uuid](npmjs.com/package/uuid) but a custom generator can be used; the generated ID will be set to `X-Request-ID` by default. This middleware can be disabled by passing `{ useRequestId: false }`
+
+<Tabs>
+  <TabItem value="apple" label="UUID versions" default>
+    <CodeBlock
+      language="typescript"
+      showLineNumbers>
+      {`const options: SuperKoaOptions = {
+  useResponseTimeHeader: {
+    headerName: "Response-Time"
+  }
+};`}
+      </CodeBlock>
+  </TabItem>
+  <TabItem value="banana" label="Custom generator">
+    This is a banana 🍌
+  </TabItem>
+</Tabs>

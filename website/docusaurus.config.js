@@ -37,8 +37,10 @@ const config = {
       "docusaurus-plugin-typedoc",
       {
         // TypeDoc options
-        entryPoints: ["../src/index.ts"],
+        entryPoints: ["../src/SuperKoa.ts", "../src/types/index.ts"],
         tsconfig: "../tsconfig.json",
+        sidebar: { position: 4 },
+        watch: true,
       },
     ],
   ],

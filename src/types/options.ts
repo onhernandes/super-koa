@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const RequestIdGeneratorEnum = z.enum(["uuid", "uuidv1", "uuidv4"]);
 
+// @TODO change to headerName
 export const ResponseTimeHeader = z.object({
   responseHeaderName: z.string().default("X-Response-Time"),
 });
