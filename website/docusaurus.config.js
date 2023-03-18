@@ -82,6 +82,12 @@ const config = {
             label: "Getting Started",
           },
           {
+            type: "doc",
+            docId: "super-koa-context/init",
+            position: "left",
+            label: "Docs",
+          },
+          {
             href: "https://github.com/onhernandes/super-koa",
             label: "GitHub",
             position: "right",

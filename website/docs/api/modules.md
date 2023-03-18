@@ -24,7 +24,7 @@ Renames and re-exports [superKoa](modules.md#superkoa)
 
 #### Defined in
 
-[src/index.ts:15](https://github.com/onhernandes/super-koa/blob/f80fb58/src/index.ts#L15)
+[src/index.ts:15](https://github.com/onhernandes/super-koa/blob/9728823/src/index.ts#L15)
 
 ## Functions
 
@@ -54,4 +54,4 @@ Renames and re-exports [superKoa](modules.md#superkoa)
 
 #### Defined in
 
-[src/types/index.ts:41](https://github.com/onhernandes/super-koa/blob/f80fb58/src/types/index.ts#L41)
+[src/types/index.ts:41](https://github.com/onhernandes/super-koa/blob/9728823/src/types/index.ts#L41)

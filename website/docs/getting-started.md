@@ -32,3 +32,7 @@ SuperKoa(app, options);
 And that's it! This is enough to get things going. Now you Koa application is powered by SuperKoa and you have plenty of features to keep exploring!
 
 See more interesting features:
+
+- Auth middlewares
+- Helpers
+- Customized Errors

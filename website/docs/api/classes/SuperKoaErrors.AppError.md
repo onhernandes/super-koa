@@ -43,7 +43,7 @@ Error.constructor
 
 #### Defined in
 
-[src/errors/AppError.ts:8](https://github.com/onhernandes/super-koa/blob/f80fb58/src/errors/AppError.ts#L8)
+[src/errors/AppError.ts:8](https://github.com/onhernandes/super-koa/blob/9728823/src/errors/AppError.ts#L8)
 
 ## Properties
 
@@ -53,7 +53,7 @@ Error.constructor
 
 #### Defined in
 
-[src/errors/AppError.ts:4](https://github.com/onhernandes/super-koa/blob/f80fb58/src/errors/AppError.ts#L4)
+[src/errors/AppError.ts:4](https://github.com/onhernandes/super-koa/blob/9728823/src/errors/AppError.ts#L4)
 
 ___
 
@@ -63,7 +63,7 @@ ___
 
 #### Defined in
 
-[src/errors/AppError.ts:5](https://github.com/onhernandes/super-koa/blob/f80fb58/src/errors/AppError.ts#L5)
+[src/errors/AppError.ts:5](https://github.com/onhernandes/super-koa/blob/9728823/src/errors/AppError.ts#L5)
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 #### Defined in
 
-[src/errors/AppError.ts:6](https://github.com/onhernandes/super-koa/blob/f80fb58/src/errors/AppError.ts#L6)
+[src/errors/AppError.ts:6](https://github.com/onhernandes/super-koa/blob/9728823/src/errors/AppError.ts#L6)
 
 ___
 
