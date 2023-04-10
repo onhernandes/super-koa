@@ -1,17 +1,18 @@
 import { z } from "zod";
 import { PartialSuperKoaContext } from "./SuperKoaContext";
-import * as Koa from "koa";
+import Koa from "koa";
 import { JWTAuth } from "./useJWTAuth";
 import { AppVersionHeader, RequestId, ResponseTimeHeader } from "./options";
 
 export const ZodAnyObject = z.record(z.any());
 
-export const Options = z.object({
+export const OptionsZodSchema = z.object({
+  opinionated: z.boolean().default(true),
   useKoaBody: z.union([ZodAnyObject, z.literal(false)]).default({}),
   useResponseTimeHeader: z
     .union([ResponseTimeHeader, z.literal(false)])
     .default(false),
-  useRequestId: z.union([RequestId, z.literal(false)]).default(false),
+  useRequestId: z.union([RequestId, z.literal(false)]).default({}),
   useAppVersionHeader: z
     .union([AppVersionHeader, z.literal(false)])
     .default(false),
@@ -29,9 +30,26 @@ export const Options = z.object({
   applyContext: z.boolean().default(true),
 });
 
-export type SuperKoaOptions = z.infer<typeof Options>;
+export const Options = OptionsZodSchema.transform((opts) => {
+  if (opts.opinionated === false) {
+    const optEnum = OptionsZodSchema.keyof().enum;
+    const opinionatedProperties = [
+      optEnum.useKoaBody,
+      optEnum.useRequestId,
+      optEnum.useErrorManager,
+    ];
 
-const deepPartialOptions = Options.deepPartial();
+    for (const k of opinionatedProperties) {
+      opts[k] = false;
+    }
+  }
+
+  return opts;
+});
+
+export type SuperKoaOptions = z.infer<typeof OptionsZodSchema>;
+
+const deepPartialOptions = OptionsZodSchema.deepPartial();
 export type PartialSuperKoaOptions = z.infer<typeof deepPartialOptions>;
 
 export type ObjectType = { [key: string]: any };
