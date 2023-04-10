@@ -27,8 +27,7 @@ export const OptionsZodSchema = z.object({
     .default(false),
   useJWTAuth: z.union([JWTAuth, z.literal(false)]).default(false),
   useErrorManager: z.boolean().default(true),
-  loadRoutes: z.string().array().default([]),
-  loadMiddlewares: z.string().array().default([]),
+  applyContext: z.boolean().default(true),
 });
 
 export const Options = OptionsZodSchema.transform((opts) => {

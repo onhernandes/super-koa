@@ -3,9 +3,6 @@ import SuperKoaContext, {
   PartialSuperKoaContext,
 } from "../types/SuperKoaContext";
 
-export { default as loadRoutes } from "./loadRoutes";
-export { default as loadMiddlewares } from "./loadMiddlewares";
-
 type KeyMapping = Record<string, string[]>;
 
 export const mergeWithKeyFn =
@@ -29,8 +26,11 @@ export type KeysOfSuperKoaContext = keyof SuperKoaContext;
 export const mergeSuperKoaContexts = (
   firstInput: PartialSuperKoaContext,
   secondInput: PartialSuperKoaContext
-): PartialSuperKoaContext => {
-  const ctx: PartialSuperKoaContext = {};
+): SuperKoaContext => {
+  const ctx: SuperKoaContext = {
+    middlewares: {},
+    helpers: {},
+  };
   const mixedKeys = [...Object.keys(firstInput), ...Object.keys(secondInput)];
   const keySet = Array.from(new Set(mixedKeys)) as Array<KeysOfSuperKoaContext>;
 

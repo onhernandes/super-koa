@@ -1,16 +1,15 @@
 import AppError from "./AppError";
-import { z } from "zod";
-import { PartialAppErrorOptionsSchema, AppErrorOptionsSchema } from "./types";
+import { PartialAppErrorOptions } from "./types";
 
 class NotFound extends AppError {
-  constructor(options?: z.infer<typeof PartialAppErrorOptionsSchema>) {
+  constructor(options?: PartialAppErrorOptions) {
     const message = "Not found";
-    options = {
+    const superOptions = {
       code: 404,
       httpStatusCode: 404,
       ...(options ?? {}),
     };
-    super(message, options as z.infer<typeof AppErrorOptionsSchema>);
+    super(message, superOptions);
   }
 }
 

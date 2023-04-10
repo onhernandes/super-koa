@@ -1,16 +1,15 @@
 import AppError from "./AppError";
-import { z } from "zod";
-import { PartialAppErrorOptionsSchema, AppErrorOptionsSchema } from "./types";
+import { PartialAppErrorOptions } from "./types";
 
 class Panic extends AppError {
-  constructor(options?: z.infer<typeof PartialAppErrorOptionsSchema>) {
+  constructor(options?: PartialAppErrorOptions) {
     const message = "Panic";
-    options = {
+    const superOptions = {
       code: 500,
       httpStatusCode: 500,
       ...(options ?? {}),
     };
-    super(message, options as z.infer<typeof AppErrorOptionsSchema>);
+    super(message, superOptions);
   }
 }
 
