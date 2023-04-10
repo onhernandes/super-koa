@@ -6,6 +6,9 @@ export const AppErrorOptionsSchema = z.object({
   metadata: z.record(z.unknown()).optional(),
 });
 
-export type AppErrorOptions = z.infer<typeof AppErrorOptionsSchema>;
-
 export const PartialAppErrorOptionsSchema = AppErrorOptionsSchema.partial();
+
+export type AppErrorOptions = z.infer<typeof AppErrorOptionsSchema>;
+export type PartialAppErrorOptions = z.infer<
+  typeof PartialAppErrorOptionsSchema
+>;
